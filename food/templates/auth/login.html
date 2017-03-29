@@ -6,6 +6,7 @@
     <div class="row">
       <div class="z-depth-1 grey lighten-4 col l4 offset-l4 s12 pt16">
         <h4 class="light-blue-text text-darken-2">Login</h4>
+        Or login with <a href="{% url 'social:begin' 'github' %}">GitHub</a><br>
         <div class="col s12">
           <form method="post">
             {% csrf_token %}

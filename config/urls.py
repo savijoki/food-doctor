@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^registration$', views.registration, name='registration'),
     url(r'^admin/', admin.site.urls),
     url(r'', include(food_urls)),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
