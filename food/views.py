@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+
+"""
+Views for the application food are declared here.
+"""
+
 from django.shortcuts import render
 
-# Create your views here.
+
+def index(request):
+    return render(request, 'index.html')

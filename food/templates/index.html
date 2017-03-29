@@ -1,0 +1,14 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container valign-wrapper" style="height: 623px;">
+    <!-- <center> -->
+        {% if user.is_authenticated %}
+        <h1 class="valign">Welcome {{user}}!</h1>
+        {% else %}
+        <h4 class="valign">Hello! Please login in <a href="{% url 'login' %}">here</a></h4>
+        {% endif %}
+    <!-- </center> -->
+</div>
+{% endblock %}

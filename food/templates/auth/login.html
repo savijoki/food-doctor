@@ -1,0 +1,33 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<center>
+  <div class="container mt32">
+    <div class="row">
+      <div class="z-depth-1 grey lighten-4 col l4 offset-l4 s12 pt16">
+        <h4 class="light-blue-text text-darken-2">Login</h4>
+        <div class="col s12">
+          <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="row">
+              <div class="input-field">
+                {{ field.label_tag }}
+                {{ field }}
+                <span class="error">{{field.errors.as_text}}</span>
+              </div>
+            </div>  
+            {% endfor %}
+            <center>
+            <div class="row">
+              <button class="col s12 btn btn-large light-blue darken-2" type="submit" name="action">Login</button>
+            </div>
+            </center>
+            <input type="hidden" name="next" value="/" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</center>
+{% endblock%}
