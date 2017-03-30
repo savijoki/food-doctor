@@ -7,13 +7,24 @@ Generic views such as authentication views are declared here.
 
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from food.forms import RegistrationForm
 from django.shortcuts import redirect, render
 
 def logout_successful(request):
+    """
+    Function to handle logout
+    """
+
     return render(request, 'auth/logout.html')
 
 
 def registration(request):
+    """
+    Function to handle registration
+    """
+    if request.user.is_authenticated():
+        return redirect('/')
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -24,5 +35,5 @@ def registration(request):
             login(request, user)
             return redirect('home')
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
     return render(request, 'auth/registration.html', {'form': form})
