@@ -8,7 +8,6 @@ class Recipe(models.Model):
 
     title = models.CharField(
         max_length=128,
-        primary_key=True,
     )
     time = models.PositiveSmallIntegerField(
         "Cooking time in minutes",

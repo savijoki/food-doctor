@@ -9,4 +9,5 @@ from food import views
 
 urlpatterns = [
     url(r'^$', views.index, name='home'),
+    url(r'^recipes/$', views.Recipes.as_view(), name="recipes"),
 ]

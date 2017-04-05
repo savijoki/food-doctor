@@ -156,3 +156,11 @@ LOGIN_REDIRECT_URL = 'home'
 
 SOCIAL_AUTH_GITHUB_KEY = _config.get("food-doctor", "GITHUB_KEY")
 SOCIAL_AUTH_GITHUB_SECRET = _config.get("food-doctor", "GITHUB_SECRET")
+
+
+# Foods API
+
+API_URL = _config.get("food-doctor", "API_URL")
+IMG_URL = _config.get("food-doctor", "IMG_URL")
+API_KEY = _config.get("food-doctor", "API_KEY")
+
