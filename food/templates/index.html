@@ -2,13 +2,15 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt32">
-    <!-- <center> -->
+<section id="hero" class="valign-wrapper">
+
+	<div class="valign white-text center">
         {% if user.is_authenticated %}
-        <h1>Welcome {{user}}!</h1>
+            <h1>Welcome {{user.first_name}}!</h1>
         {% else %}
-        <h4>Hello! Please login in <a href="{% url 'login' %}">here</a></h4>
+            <h3>Hello and welcome to Food doctor!</h3>
+            <a href="{% url 'login' %}" class="btn-large hero-button">Login</a>
         {% endif %}
-    <!-- </center> -->
-</div>
+    </div>
+</section>
 {% endblock %}
