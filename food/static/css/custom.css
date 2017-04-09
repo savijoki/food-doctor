@@ -92,21 +92,21 @@ main {
 }
 
 #wrap {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .error {
-    color:red;
+  color:red;
 }
 
 .content-bottom {
   position: absolute;
-    bottom: 30px;
-    left: 0;
-    right: 0;
+  bottom: 30px;
+  left: 0;
+  right: 0;
 }
 
 .timer-column .valign,
@@ -133,9 +133,7 @@ main {
   font-size: 16px;
 }
 
-.tabs {
-  overflow-x: hidden;
-}
+
 /* Placement classes */
 .mt32 {
     margin-top: 32px !important;
@@ -145,6 +143,6 @@ main {
 }
 
 .pt16 {
-    padding-top: 16px !important;
+  padding-top: 16px !important;
 }
 /* Placement classes end */
