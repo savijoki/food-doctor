@@ -102,6 +102,12 @@ main {
     color:red;
 }
 
+.content-bottom {
+  position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+}
 /* Placement classes */
 .mt32 {
     margin-top: 32px !important;

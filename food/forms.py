@@ -31,5 +31,5 @@ class RegistrationForm(UserCreationForm):
             'last_name': forms.TextInput(attrs={
                 'data-length': User._meta.get_field('last_name').max_length
                 }
-            )
+            ),
         }

@@ -1,0 +1,61 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt32 col s12">
+  <div class="row">
+    <h3 class="light-blue-text text-darken-2 center-align">{{recipe.title}}</h3>
+    <h5 class="grey-text text-darken-2 center-align">
+        Cuisines: {% for cuisine in recipe.cuisines %}{{cuisine}}{% if not forloop.last %}, {% endif %}{% endfor %}
+      </h5>
+    <div class="col m6 s6 center-align">
+      <h3><i class="material-icons">av_timer</i>{{recipe.readyInMinutes}} minutes</h3>
+    </div>
+    <div class="col m6 s6 center-align">
+      <label>Details in short:</label><br/>
+      <span>Carbohydrates: {{recipe.nutrition.caloricBreakdown.percentCarbs}}%</span><br/>
+      <span>Fat: {{recipe.nutrition.caloricBreakdown.percentFat}}%</span><br/>
+      <span>Protein: {{recipe.nutrition.caloricBreakdown.percentProtein}}%</span><br/>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col m5 s12">
+      <img class="responsive-img" src="{{recipe.image}}">  
+    </div>
+    <div class="col m7 s12">
+      <label>Instructions:</label><br/>
+      <text>{{recipe.instructions}}</text>
+    </div>
+  </div>
+  <div>
+    <div class="divider"></div>
+    <h4 class="light-blue-text text-darken-2">Step by step instructions</h4>
+  </div>
+  <ul class="collapsible" data-collapsible="accordion">
+    {% for step in recipe.analyzedInstructions.0.steps %}
+      <li>
+        <div class="collapsible-header">
+          <i class="material-icons">add</i>
+          Step: {{step.number}}
+        </div>
+        <div class="collapsible-body">
+          <div class="row">
+
+            {% if step.ingredients %}
+              <div class="col m4 s4">
+                <h5 class="light-blue-text text-darken-2">Ingredients:</h5>
+                {% for ingredient in step.ingredients %}
+                  <span>{{ingredient.name}} {% if not forloop.last %},{% endif %}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <div class="col m8 s8">
+              <p>{{step.step}}</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock%}
