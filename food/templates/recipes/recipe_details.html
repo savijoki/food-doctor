@@ -1,61 +1,99 @@
 {% extends "layout/base.html" %}
 {% load static %}
+
+{% block custom_css %}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">
+{% endblock %}
+
 {% block content %}
-<div class="container mt32 col s12">
+<div class="container mt32">
   <div class="row">
     <h3 class="light-blue-text text-darken-2 center-align">{{recipe.title}}</h3>
     <h5 class="grey-text text-darken-2 center-align">
-        Cuisines: {% for cuisine in recipe.cuisines %}{{cuisine}}{% if not forloop.last %}, {% endif %}{% endfor %}
-      </h5>
-    <div class="col m6 s6 center-align">
-      <h3><i class="material-icons">av_timer</i>{{recipe.readyInMinutes}} minutes</h3>
-    </div>
-    <div class="col m6 s6 center-align">
-      <label>Details in short:</label><br/>
-      <span>Carbohydrates: {{recipe.nutrition.caloricBreakdown.percentCarbs}}%</span><br/>
-      <span>Fat: {{recipe.nutrition.caloricBreakdown.percentFat}}%</span><br/>
-      <span>Protein: {{recipe.nutrition.caloricBreakdown.percentProtein}}%</span><br/>
-    </div>
-  </div>
+      Cuisines: {% for cuisine in recipe.cuisines %}{{cuisine}}{% if not forloop.last %}, {% endif %}{% endfor %}
+    </h5>
 
-  <div class="row">
-    <div class="col m5 s12">
-      <img class="responsive-img" src="{{recipe.image}}">  
-    </div>
-    <div class="col m7 s12">
-      <label>Instructions:</label><br/>
-      <text>{{recipe.instructions}}</text>
-    </div>
-  </div>
-  <div>
-    <div class="divider"></div>
-    <h4 class="light-blue-text text-darken-2">Step by step instructions</h4>
-  </div>
-  <ul class="collapsible" data-collapsible="accordion">
-    {% for step in recipe.analyzedInstructions.0.steps %}
-      <li>
-        <div class="collapsible-header">
-          <i class="material-icons">add</i>
-          Step: {{step.number}}
+    <ul class="tabs tabs-fixed-width mb32">
+      <li class="tab"><a href="#statistics">Statistics</a></li>
+      <li class="tab"><a href="#overview">Overview</a></li>
+      <li class="tab"><a href="#steps">Step-by-Step</a></li>
+    </ul>
+    <div id="statistics" class="mt32">
+      <div class="col m6 s12 timer-column valign-wrapper">
+        <div class="valign center-align">
+          <i class="material-icons">av_timer</i><br/>
+          <span>{{recipe.readyInMinutes}} minutes</span>
         </div>
-        <div class="collapsible-body">
-          <div class="row">
-
-            {% if step.ingredients %}
-              <div class="col m4 s4">
-                <h5 class="light-blue-text text-darken-2">Ingredients:</h5>
-                {% for ingredient in step.ingredients %}
-                  <span>{{ingredient.name}} {% if not forloop.last %},{% endif %}</span>
-                {% endfor %}
-              </div>
-            {% endif %}
-            <div class="col m8 s8">
-              <p>{{step.step}}</p>
+      </div>
+      <div class="col m6 s12 carbs-column valign-wrapper">
+        <div class="valign">
+          <div id="chart"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="overview">
+      <div class="col m5 s12">
+        <img class="responsive-img" src="{{recipe.image}}">  
+      </div>
+      <div class="col m7 s12">
+        <text>{{recipe.instructions}}</text>
+      </div>
+    </div>
+  
+    <div id="steps">
+      <ul class="collapsible" data-collapsible="accordion">
+        {% for step in recipe.analyzedInstructions.0.steps %}
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">add</i>
+              Step: {{step.number}}
             </div>
-          </div>
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
+            <div class="collapsible-body">
+              <div class="row">
+
+                {% if step.ingredients %}
+                  <div class="col m4 s12">
+                    <h5 class="light-blue-text text-darken-2">Ingredients:</h5>
+                    {% for ingredient in step.ingredients %}
+                      <span>{{ingredient.name}} {% if not forloop.last %},{% endif %}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                <div class="col m8 s12">
+                  <p>{{step.step}}</p>
+                </div>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 </div>
-{% endblock%}
+{% endblock %}
+
+{% block custom_js %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+<script type="text/javascript">
+$(function() {
+
+  var chart = c3.generate({
+    bindto: '#chart',
+    size: {
+        height: 300,
+        width: 300
+    },
+    data: {
+      columns: [
+        ['Carbohydrates', {{recipe.nutrition.caloricBreakdown.percentCarbs}}],
+        ['Fat', {{recipe.nutrition.caloricBreakdown.percentFat}}],
+        ['Protein', {{recipe.nutrition.caloricBreakdown.percentProtein}}]
+      ]
+    }
+  });
+  chart.transform('pie');
+});
+</script>
+{% endblock %}
