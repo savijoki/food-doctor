@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Recipe(models.Model):
@@ -9,16 +10,8 @@ class Recipe(models.Model):
     title = models.CharField(
         max_length=128,
     )
-    time = models.PositiveSmallIntegerField(
-        "Cooking time in minutes",
-    )
-    imageURL = models.URLField(
-        "URL to recipe's image",
-        max_length=128
-    )
-    summary = models.CharField(
-        "Summary of the recipe",
-        max_length=256,
+    recipe_id = models.PositiveIntegerField(
+        "Related recipe's id",
     )
 
 
@@ -42,4 +35,21 @@ class MealPlan(models.Model):
     )
     recipes = models.ManyToManyField(
         Recipe,
+    )
+
+
+class Comment(models.Model):
+    """
+    Users' comments on recipes.
+    """
+
+    recipe_id = models.PositiveIntegerField(
+        "Related recipe's id",
+    )
+    comment = models.TextField(
+        "Comment",
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
     )

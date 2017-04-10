@@ -16,7 +16,7 @@
     <ul class="tabs mb32">
       <li class="tab col s4"><a href="#statistics">Statistics</a></li>
       <li class="tab col s4"><a href="#overview">Overview</a></li>
-      <li class="tab col s3"><a href="#steps">Step-by-Step</a></li>
+      <li class="tab col s4"><a href="#steps">Step-by-Step</a></li>
     </ul>
     <div id="statistics">
       <div class="col m6 s12 timer-column valign-wrapper">
@@ -28,6 +28,13 @@
       <div class="col m6 s12 carbs-column valign-wrapper">
         <div class="valign">
           <div id="chart"></div>
+          <div class="center-align mt16">
+            <input type="radio" name="group1" id="pie"
+              class="with-gap chart-button" value="pie" checked="checked">
+            <label for="pie" class="pr32">Pie</label>
+            <input type="radio" name="group1" id="bar" class="with-gap chart-button" value="bar">
+            <label for="bar" class="pr32">Bar</label>
+          </div>
         </div>
       </div>
     </div>
@@ -94,6 +101,12 @@ $(function() {
     }
   });
   chart.transform('pie');
+
+  $('.chart-button').on('click', function() {
+    var value = $(this).val();
+    chart.transform(value);
+  });
 });
+
 </script>
 {% endblock %}
