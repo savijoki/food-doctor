@@ -13,28 +13,10 @@ class Recipe(models.Model):
     recipe_id = models.PositiveIntegerField(
         "Related recipe's id",
     )
-
-
-class MealPlan(models.Model):
-    """
-    A collection of recipes. The amount of recipes
-    is defined by period.
-    """
-
-    DAY = 1
-    WEEK = 7
-    PERIOD_CHOICES = (
-        (DAY, 'Day'),
-        (WEEK, 'Week'),
-    )
-    period = models.CharField(
-        "Meal plan's period",
-        max_length=4,
-        choices=PERIOD_CHOICES,
-        default=DAY,
-    )
-    recipes = models.ManyToManyField(
-        Recipe,
+    date = models.DateTimeField(
+        "Added to favourites",
+        auto_now_add=True,
+        blank=True,
     )
 
 
@@ -46,10 +28,15 @@ class Comment(models.Model):
     recipe_id = models.PositiveIntegerField(
         "Related recipe's id",
     )
-    comment = models.TextField(
-        "Comment",
-    )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+    )
+    body = models.TextField(
+        "Comment",
+    )
+    date = models.DateTimeField(
+        "Comment's date",
+        auto_now_add=True,
+        blank=True,
     )

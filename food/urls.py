@@ -23,4 +23,9 @@ urlpatterns = [
         views.recipe_details,
         name="recipe_details"
     ),
+    url(
+        r'^recipes/(?P<id>[0-9]+)/comments$',
+        views.recipe_comments,
+        name="recipe_comments"
+    ),
 ]

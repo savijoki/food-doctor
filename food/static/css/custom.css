@@ -17,6 +17,10 @@ main {
   z-index: 2;
 }
 
+nav .dropdown-content li a {
+  color: #0288d1;
+}
+
 .center {
   margin: 0 auto;
 }
@@ -118,6 +122,21 @@ main {
   overflow-x: hidden;
 }
 
+.tabs .tab a.active {
+  color: #0288d1;
+}
+
+.tabs .tab a:hover {
+  color: #0288d1;
+}
+
+.tabs .tab a {
+  color: #0288d1;
+}
+.tabs .indicator {
+  background-color: #0288d1; 
+}
+
 .timer-column {
   height: 280px;
   font-size: 32px;
@@ -128,6 +147,7 @@ main {
   font-size: 72px;
   position: relative;
   bottom: -10px;
+  color: #0288d1;
 }
 .carbs-column {
   height: 400px;
@@ -152,6 +172,10 @@ main {
   -ms-transform: scale(.5);
   -o-transform: scale(.5);
   transform: scale(.5);
+}
+
+.inline-block {
+  display: inline-block;
 }
 
 /* Placement classes */

@@ -4,15 +4,15 @@
 Views for the application food are declared here.
 """
 
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from food.models import Recipe
+from food.models import Comment
 from config.settings import API_URL, IMG_URL, API_KEY
 import requests
 from django.http import JsonResponse
-import json
+from django.core import serializers
 
 
 def index(request):
@@ -50,7 +50,8 @@ class Recipes(TemplateView):
 
 def recipe_details(request, id):
     """
-    Function to render recipe in more detail.
+    Function to render recipe in more detail and comments
+    related to the recipe from application's users.
     """
     url = API_URL + "/recipes/%s/information" % (id)
     headers = {
@@ -62,8 +63,19 @@ def recipe_details(request, id):
     }
     res = requests.get(url, params=params, headers=headers)
     results = res.json() if res.status_code == 200 else []
-    # print (results)
+    comments = Comment.objects.filter(recipe_id=id).order_by('-date')
     values = {
-        'recipe': results
+        'recipe': results,
+        'comments': comments,
     }
     return render(request, 'recipes/recipe_details.html', values)
+
+
+def recipe_comments(request, id):
+    """
+    Function to retrieve comments for certain recipe.
+    Returns comments in JSON format.
+    """
+    comments = serializers.serialize(
+        "json", Comment.objects.filter(recipe_id=id))
+    return JsonResponse(comments, safe=False)

@@ -1,6 +1,15 @@
+// Form handling for find_recipe form
 $('#find_recipe').on('submit', function(event) {
   event.preventDefault();
+  var search = $('#search').val().trim();
 
+  // The search was blank or only whitespace
+  if (!search) {
+    $('#search').val("");
+    return;
+  }
+
+  // Loading icon using html elements
   $('#search_results').html(`
     <div class="valign-wrapper" style="height:300px;">
       <div class="preloader-wrapper big active" style="margin:auto;">
@@ -19,7 +28,8 @@ $('#find_recipe').on('submit', function(event) {
     </div>
   `);
 
-  $.get($(this).attr('action'), {'search': $('#search').val()})
+  // Retrieve information using AJAX
+  $.get($(this).attr('action'), {'search': search})
     .done(function(data) {
       var results = data['results'];
       var image_url = data['IMG_URL'];
@@ -31,7 +41,9 @@ $('#find_recipe').on('submit', function(event) {
             <div class="card large">
               <div class="card-image waves-effect waves-block waves-light">
                 <div class="activator" 
-                  style="width:100%; height:300px;background: url('${image_url}${value['image']}') no-repeat 50% 50%; background-size:cover;"></div>
+                  style="width:100%; height:300px;
+                  background: url('${image_url}${value['image']}') no-repeat 50% 50%;
+                  background-size:cover;"></div>
               </div>
               <div class="card-content">
                 <i class="material-icons right">more_vert</i>
@@ -39,7 +51,9 @@ $('#find_recipe').on('submit', function(event) {
                 </span>
               </div>
               <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>${value['title']}</span>
+                <span class="card-title grey-text text-darken-4">
+                  <i class="material-icons right">close</i>${value['title']}
+                </span>
                 <p><b>Cooking time: </b> ${value['readyInMinutes']} minutes</p>
                 <div class="content-bottom center-align">
                   <a href="/recipes/${value['id']}"
@@ -58,5 +72,13 @@ $('#find_recipe').on('submit', function(event) {
         `;
       }
       $(container).html(element);
-  });
+    })
+    .fail(function() {
+      element = `
+          <center>
+            <h3>An error occured! Please try again!</h3>
+          </center>
+        `;
+      $('#search_results').html(element);
+    });
 });
