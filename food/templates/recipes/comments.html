@@ -1,0 +1,17 @@
+{% for comment in comments %}
+  <div class="card-panel grey lighten-5 z-depth-1">
+    <div class="row">
+      <div class="col s12">
+        <h5 class="inline-block">{{comment.user.first_name}}</h5>
+        <h6 class="grey-text text-darken-2 inline-block right">{{comment.date}}</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <span class="black-text">
+          {{comment.body}}
+        </span>
+      </div>
+    </div>
+  </div>
+{% endfor %}

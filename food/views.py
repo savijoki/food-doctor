@@ -11,8 +11,9 @@ from django.utils.decorators import method_decorator
 from food.models import Comment
 from config.settings import API_URL, IMG_URL, API_KEY
 import requests
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from django.template import loader, RequestContext
 
 
 def index(request):
@@ -68,14 +69,19 @@ def recipe_details(request, id):
         'recipe': results,
         'comments': comments,
     }
+    # content = loader.render_to_string('recipes/recipe_details.html', values)
+    # print (content)
     return render(request, 'recipes/recipe_details.html', values)
 
 
 def recipe_comments(request, id):
     """
     Function to retrieve comments for certain recipe.
-    Returns comments in JSON format.
+    Returns comments in rendered HTML.
     """
-    comments = serializers.serialize(
-        "json", Comment.objects.filter(recipe_id=id))
-    return JsonResponse(comments, safe=False)
+    comments = Comment.objects.filter(recipe_id=id).order_by('-date')
+    values = {
+        'comments': comments,
+    }
+    content = loader.render_to_string('recipes/comments.html', values)
+    return HttpResponse(content)
