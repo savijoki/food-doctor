@@ -13,5 +13,49 @@
         </span>
       </div>
     </div>
+    {% if comment.user == user %}
+        <div style="position:relative;">
+          <div class="fixed-action-btn horizontal" style="position:absolute;bottom:0;">
+            <a class="btn-floating btn-large red">
+              <i class="large material-icons">clear_all</i>
+            </a>
+            <ul>
+              <li><a class="modal-trigger btn-floating waves-effect waves-light red right"
+                data-toggle="modal" href="#delete-comment" data-id="{{comment.id}}">
+                <i class="material-icons">delete</i>
+              </a></li>
+
+              <li><a class="modal-trigger btn-floating waves-effect waves-light blue right"
+                href="#comment-form" data-id="{{comment.id}}">
+                <i class="material-icons">mode_edit</i>
+              </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      {% endif %}
   </div>
 {% endfor %}
+
+<!-- Add a new comment or edit comment -->
+<div id="comment-form" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4>Modal Header</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+  </div>
+</div>
+
+<!-- Are you sure prompt to delete comment -->
+<div id="delete-comment" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4>Delete comment</h4>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Disagree</a>
+  </div>
+</div>

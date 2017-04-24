@@ -82,6 +82,8 @@ def recipe_comments(request, id):
     comments = Comment.objects.filter(recipe_id=id).order_by('-date')
     values = {
         'comments': comments,
+        'user': request.user
     }
     content = loader.render_to_string('recipes/comments.html', values)
+    # print (content)
     return HttpResponse(content)
