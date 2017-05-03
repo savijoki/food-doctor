@@ -28,4 +28,14 @@ urlpatterns = [
         views.recipe_comments,
         name="recipe_comments"
     ),
+    url(
+        r'^comments/add$',
+        views.add_comment,
+        name="add_comment"
+    ),
+    url(
+        r'^comments/delete/(?P<id>[0-9]+)$',
+        views.delete_comment,
+        name="delete_comment"
+    ),
 ]

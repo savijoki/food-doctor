@@ -14,7 +14,8 @@ import requests
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from django.template import loader, RequestContext
-
+from food.forms import CommentForm
+from django.contrib.auth.models import User
 
 def index(request):
     """
@@ -48,7 +49,7 @@ class Recipes(TemplateView):
 
         return render(request, 'recipes/show_recipes.html')
 
-
+@login_required
 def recipe_details(request, id):
     """
     Function to render recipe in more detail and comments
@@ -68,9 +69,8 @@ def recipe_details(request, id):
     values = {
         'recipe': results,
         'comments': comments,
+        'form': CommentForm()
     }
-    # content = loader.render_to_string('recipes/recipe_details.html', values)
-    # print (content)
     return render(request, 'recipes/recipe_details.html', values)
 
 
@@ -85,5 +85,46 @@ def recipe_comments(request, id):
         'user': request.user
     }
     content = loader.render_to_string('recipes/comments.html', values)
-    # print (content)
     return HttpResponse(content)
+
+
+@login_required
+def add_comment(request):
+    """
+    Function to add comment to certain recipe.
+    """
+    user = request.user
+    comment_form = CommentForm(data=request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.user = request.user
+        comment.save()
+    return HttpResponse(200)
+
+
+@login_required
+def edit_comment(request, id):
+    """
+    Function to edit comment to certain recipe.
+    """
+    user = request.user
+    comment = Comment.objects.get(id=id)
+    if comment.user != user or not comment:
+        return HttpResponse(403)
+    else:
+        comment.delete()
+    return HttpResponse(200)
+
+
+@login_required
+def delete_comment(request, id):
+    """
+    Function to delete comment from certain recipe.
+    """
+    user = request.user
+    comment = Comment.objects.get(id=id)
+    if comment.user != user or not comment:
+        return HttpResponse(403)
+    else:
+        comment.delete()
+    return HttpResponse(200)

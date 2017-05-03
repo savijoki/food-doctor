@@ -7,6 +7,7 @@ Forms used in the foods application are declared here.
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from food.models import Comment
 
 
 class RegistrationForm(UserCreationForm):
@@ -34,3 +35,13 @@ class RegistrationForm(UserCreationForm):
                 }
             ),
         }
+
+class CommentForm(forms.ModelForm):
+    """
+    Comment form used in recipes
+    """
+    body = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'materialize-textarea'}))
+    recipe_id = forms.IntegerField(widget=forms.HiddenInput())
+    class Meta:
+        model = Comment
+        exclude = ['user']
