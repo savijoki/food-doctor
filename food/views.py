@@ -16,6 +16,7 @@ from django.core import serializers
 from django.template import loader, RequestContext
 from food.forms import CommentForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 def index(request):
     """
@@ -122,8 +123,11 @@ def delete_comment(request, id):
     Function to delete comment from certain recipe.
     """
     user = request.user
-    comment = Comment.objects.get(id=id)
-    if comment.user != user or not comment:
+    try:
+        comment = Comment.objects.get(id=id)
+    except ObjectDoesNotExist:
+        comment = None
+    if not comment or comment.user != user:
         return HttpResponse(403)
     else:
         comment.delete()

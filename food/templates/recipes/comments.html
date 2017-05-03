@@ -21,13 +21,13 @@
             </a>
             <ul>
               <li>
-                <a id="delete_button" data-toggle="modal" href="#delete_modal" data-id="{{comment.id}}"
+                <a data-toggle="modal" href="#delete_modal" data-id="{{comment.id}}" data-button="delete_button"
                   class="modal-trigger btn-floating waves-effect waves-light red right">
                   <i class="material-icons">delete</i>
                 </a>
               </li>
               <li>
-                <a id="edit_button" href="#edit_comment_modal" data-id="{{comment.id}}"
+                <a href="#edit_comment_modal" data-id="{{comment.id}}" data-button="edit_button"
                     class="modal-trigger btn-floating waves-effect waves-light blue right">
                   <i class="material-icons">mode_edit</i>
                 </a>
