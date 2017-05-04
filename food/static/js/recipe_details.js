@@ -41,14 +41,8 @@ function update() {
     var url = '/recipes/'+ recipe_id + '/comments';
     $.get(url).done(function(data) {
       var container = $('#comments');
-      var previous_count = $(container).find('.card-panel').length;
       var new_element = $('<div></div>').html(data).find('.card-panel');
-      var new_element_count = $(new_element).length;
-      if (previous_count === new_element_count) {
-        return;
-      } else {
-        container.html(new_element);
-      }
+      container.html(new_element);
     });
   }
 }
@@ -82,6 +76,7 @@ $(document).on('click', '.modal-trigger', function() {
   } else if (id == 'edit_button') {
     var body = $('#body_' + comment_id).html().trim();
     $('#edit_comment_form').find("#id_body").val(body);
+    $('#edit_comment_modal').find('.btn-edit').attr('data-id', comment_id);
   }
 });
 
@@ -116,4 +111,21 @@ $('#add_comment_form').on('submit', function(event) {
     });
   }
   body.val("");
+});
+
+
+// Edit the comment only if body is not empty
+$('#edit_comment_form').on('submit', function(event) {
+  event.preventDefault();
+  var csrftoken = getCookie('csrftoken');
+  var body = $(this).find('#id_body');
+  var comment_id = $('.btn-edit').attr('data-id');
+
+  var url = '/comments/edit/' + comment_id;
+  if (body.val().trim()) {
+    $.post(url, {
+      csrfmiddlewaretoken: csrftoken,
+      body: body.val().trim()
+    });
+  }
 });
