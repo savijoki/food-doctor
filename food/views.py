@@ -109,11 +109,15 @@ def edit_comment(request, id):
     Function to edit comment to certain recipe.
     """
     user = request.user
-    comment = Comment.objects.get(id=id)
-    if comment.user != user or not comment:
+    try:
+        comment = Comment.objects.get(id=id)
+    except ObjectDoesNotExist:
+        comment = None
+    if not comment or comment.user != user:
         return HttpResponse(403)
     else:
-        comment.delete()
+        comment.body = request.POST.get('body')
+        comment.save()
     return HttpResponse(200)
 
 

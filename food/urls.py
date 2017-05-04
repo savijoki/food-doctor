@@ -34,6 +34,11 @@ urlpatterns = [
         name="add_comment"
     ),
     url(
+        r'^comments/edit/(?P<id>[0-9]+)$',
+        views.edit_comment,
+        name="edit_comment"
+    ),
+    url(
         r'^comments/delete/(?P<id>[0-9]+)$',
         views.delete_comment,
         name="delete_comment"
