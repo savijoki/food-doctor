@@ -11,8 +11,11 @@
 
 <ul class="side-nav" id="mobile-nav">
   {% if user.is_authenticated %}
-    <li>
+    <li class="{% if navbar == 'recipes' %}active{% endif %}">
       <a href="{% url 'recipes' %}">Recipes</a>
+    </li>
+    <li class="{% if navbar == 'favourites' %}active{% endif %}">
+      <a href="{% url 'favourites' %}">Favourites</a>
     </li>
     <li>
       <a class="dropdown-button" href="#!" data-activates="account_dropdown_mobile" data-beloworigin="true">
@@ -30,8 +33,11 @@
     <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
       {% if user.is_authenticated %}
-        <li>
+        <li class="{% if navbar == 'recipes' %}active{% endif %}">
           <a href="{% url 'recipes' %}">Recipes</a>
+        </li>
+        <li class="{% if navbar == 'favourites' %}active{% endif %}">
+          <a href="{% url 'favourites' %}">Favourites</a>
         </li>
         <li>
           <a class="dropdown-button" href="#" data-activates="account_dropdown" data-beloworigin="true">

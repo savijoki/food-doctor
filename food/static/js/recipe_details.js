@@ -129,3 +129,58 @@ $('#edit_comment_form').on('submit', function(event) {
     });
   }
 });
+
+
+// Functionality to add recipe to favourites
+$(document).on('click', '.favourites', function() {
+  var csrftoken = getCookie('csrftoken');
+  var title = $('#recipe-title').html();
+  var recipe_id = $('#recipe').data('id');
+  var image_url = $('#overview').find('.responsive-img').attr('src');
+  data = {
+    csrfmiddlewaretoken: csrftoken,
+    title: title,
+    recipe_id: recipe_id,
+    image_url: image_url,
+  };
+  var url = '/favourites/add/';
+  $.post(url, data, function(data) {
+    var toast = '';
+    if (data == 200) {
+      toast = 'Recipe was already in your favourites!';
+    } else {
+      toast = 'Added to favourites!';
+    }
+    var button = `
+      <button class="favourites-remove waves-effect waves-light btn btn-large btn-floating red">
+        <i class="material-icons">delete</i>
+      </button>
+    `;
+    $('#favourites').html(button);
+    Materialize.toast(toast, 2000);
+  });
+});
+
+
+// Functionality to remove recipe from favourites
+$(document).on('click', '.favourites-remove', function() {
+  Materialize.toast('Removed from favourites!', 2000);
+  var csrftoken = getCookie('csrftoken');
+  var recipe_id = $('#recipe').data('id');
+  var url = '/favourites/remove/' + recipe_id;
+  $.post(url, {csrfmiddlewaretoken: csrftoken}, function(data) {
+    var toast = '';
+    if (data == 200) {
+      toast = 'Recipe was removed from your favourites!';
+    } else {
+      toast = 'Recipe not found! It might have been removed already!';
+    }
+    var button = `
+      <button class="favourites waves-effect waves-light btn btn-large btn-floating light-blue darken-2">
+        <i class="material-icons">star</i>
+      </button>
+    `;
+    $('#favourites').html(button);
+  });
+  
+});

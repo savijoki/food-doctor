@@ -40,9 +40,8 @@ $('#find_recipe').on('submit', function(event) {
           <div class="col l3 m4 s6">
             <div class="card large">
               <div class="card-image waves-effect waves-block waves-light">
-                <div class="activator" 
-                  style="width:100%; height:300px;
-                  background: url('${image_url}${value['image']}') no-repeat 50% 50%;
+                <div class="image-background activator" 
+                  style="background: url('${image_url}${value['image']}') no-repeat 50% 50%;
                   background-size:cover;"></div>
               </div>
               <div class="card-content">

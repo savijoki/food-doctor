@@ -1,6 +1,5 @@
 {% extends "layout/base.html" %}
 {% load static %}
-
 {% block custom_css %}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">
 {% endblock %}
@@ -8,7 +7,19 @@
 {% block content %}
 <div class="container mt32 mb32">
   <div class="row">
-    <h3 class="light-blue-text text-darken-2 center-align">{{recipe.title}}</h3>
+    <h3 class="light-blue-text text-darken-2 center-align"><span id="recipe-title">{{recipe.title}}</span>
+      <div id="favourites" class="right">
+        {% if favourite %}
+          <button class="favourites-remove waves-effect waves-light btn btn-large btn-floating red">
+            <i class="material-icons">delete</i>
+          </button>
+        {% else %}
+          <button class="favourites waves-effect waves-light btn btn-large btn-floating light-blue darken-2">
+            <i class="material-icons">star</i>
+          </button>
+        {% endif %}
+      </div>
+    </h3>
     {% if recipe.cuisines %}
       <h5 class="grey-text text-darken-2 center-align">
         Cuisines: {% for cuisine in recipe.cuisines %}{{cuisine}}{% if not forloop.last %}, {% endif %}{% endfor %}

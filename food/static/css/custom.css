@@ -178,6 +178,14 @@ nav .dropdown-content li a {
   display: inline-block;
 }
 
+.image-background {
+  width:100%;
+  height:300px;
+}
+
+.card-fixed-size {
+  height: 480px;
+}
 /* Placement classes */
 .mt16 {
   margin-top: 16px !important;
@@ -196,3 +204,14 @@ nav .dropdown-content li a {
   padding-right: 32px !important;
 }
 /* Placement classes end */
+
+/* Toast positioning */
+@media screen and (min-width: 992px) {
+  #toast-container {
+    top: auto !important;
+    right: auto !important;
+    bottom: 10%;
+    left:7%;  
+  }
+}
+/* Toast positioning ends */

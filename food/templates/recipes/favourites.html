@@ -1,0 +1,38 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt32">
+  <center>
+    <h3 class="light-blue-text text-darken-2">Favourite recipes</h3>
+  </center>
+  <div class="divider"></div>
+  <div class="row">
+    <div id="favourites">
+      {% for recipe in recipes %}
+      <div class="col l3 m4 s6">
+        <div class="card card-fixed-size">
+          <div class="card-image" >
+            <div class="image-background" style="background: url('{{recipe.image_url}}') no-repeat 50% 50%;background-size:cover;"></div>
+            <a href="{% url 'recipe_details' recipe.recipe_id %}" 
+              class="btn-floating btn-large halfway-fab waves-effect waves-light light-blue darken-2">
+              <i class="material-icons">add</i>
+            </a>
+          </div>
+          <div class="card-content">
+            <span class="card-title">{{recipe.title}}</span>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+        <div class="col l6 offset-l3">
+          <center>
+            <h3>No recipes found!</h3>
+            <h5>Find a recipe and add it to favourites.
+            You can search for recipes in <a href="{% url 'recipes' %}">here.</a></h5>
+          </center>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock%}
