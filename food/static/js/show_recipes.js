@@ -32,7 +32,7 @@ $('#find_recipe').on('submit', function(event) {
   $.get($(this).attr('action'), {'search': search})
     .done(function(data) {
       var results = data['results'];
-      var image_url = data['IMG_URL'];
+      var image_url = 'https://webknox.com/recipeImages/';
       var container = $('#search_results');
       var element = "";
       $.each(results, function(index, value) {

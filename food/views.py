@@ -11,7 +11,7 @@ from django.core import serializers
 from django.template import loader, RequestContext
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from config.settings import API_URL, IMG_URL, API_KEY
+from config.settings import API_KEY
 from food.models import Comment, Recipe
 from food.forms import CommentForm
 
@@ -30,7 +30,7 @@ def recipes(request):
     search = request.GET.get('search')
 
     if search:
-        url = API_URL + "/recipes/search"
+        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search"
         headers = {
             "X-Mashape-Key": API_KEY,
             "Accept": "application/json"
@@ -41,8 +41,7 @@ def recipes(request):
         res = requests.get(url, params=params, headers=headers)
         results = res.json()['results'] if res.status_code == 200 else []
         response = {
-            'results': results,
-            'IMG_URL': IMG_URL
+            'results': results
         }
         return JsonResponse(response)
 
@@ -57,7 +56,7 @@ def recipe_details(request, recipe_id):
     Function to render recipe in more detail and comments
     related to the recipe from application's users.
     """
-    url = API_URL + "/recipes/%s/information" % (recipe_id)
+    url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/%s/information" % (recipe_id)
     headers = {
         "X-Mashape-Key": API_KEY,
         "Accept": "application/json"
