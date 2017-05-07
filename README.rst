@@ -11,6 +11,15 @@ Idea
 
 The idea behind this project is to provide a simple service that offers information about recipes and nutrients in the ingredients. The scope in the project isn't set so it might still change during implementation. The aim is also to visualize also the data retrieved from the API by using for example d3js or c3js.
 
+Features
+========
+
+* Users can search for recipes
+* Recipes can be observed in more detail, including cooking instructions, ingredients, nutritions...
+* Data-visualization with c3js -library
+* Users can comment on recipes
+* Users can save their favourite recipes
+
 Configuration
 =============
 
@@ -23,3 +32,34 @@ These include
     * Postgresql database password
     * Github key
     * Github secret
+    * API url root
+    * API image url root
+    * Foods API key
+
+Installation
+============
+
+You can install the required packages for the application using virtualenv from `requirements.txt` -file.
+
+.. code-block:: bash
+
+   $ source venv/bin/activate
+   $ pip install -r requirements.txt
+
+After the packages have been installed, you have to create postgresql user and a database that the user owns. Update `.secrets`-file accordingly.
+
+Then you can proceed to creating the migrations for the project. This can be achieved by:
+
+.. code-block:: bash
+
+   $ ./manage.py makemigrations food
+   $ ./manage.py migrate
+
+After these server can be started with:
+
+.. code-block:: bash
+
+   $ ./manage.py runserver
+
+Server can be accessed in `localhost:8000 <http://localhost:8000>`_.
+
